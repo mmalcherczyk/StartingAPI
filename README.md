@@ -1,3 +1,5 @@
-# myfastapirepo
+## API with FastAPI and Python ##
 
-API WITH FAST API
+### Bonus ###
+- Docker container
+- Jenkins CI/CD
