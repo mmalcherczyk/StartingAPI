@@ -1,7 +1,7 @@
 pipeline {
     environment {
-        imagename = "sl1god/fastapi"
-        registryCredential = "sl1god"
+        registry = "sl1god/fastapi"
+        registryCredential = "dockerhub_id"
         dockerImage = ''
     }
     agent any
@@ -20,18 +20,22 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build imagename
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             }
         }
         stage("Deploy Docker Image") { 
             steps {
                 script {
-                    docker.withRegistry( ' ', registryCredential ) {
-                        dockerImage.push("$BUILD_NUMBER")
-                        dockerImage.push('latest')
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
                     }
                 }
+            }
+        }
+        stage("Cleaning up") {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
