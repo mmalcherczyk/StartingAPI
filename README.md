@@ -3,3 +3,4 @@
 ### Bonus ###
 - Docker container
 - Jenkins CI/CD
+- GITLAB
